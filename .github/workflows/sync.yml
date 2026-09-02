@@ -1,0 +1,37 @@
+name: Sync formula from copypaste.fyi
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"
+  repository_dispatch:
+    types: [sync-formula]
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch Formula from upstream main
+        run: |
+          set -euo pipefail
+          mkdir -p Formula
+          curl -fsSL -o Formula/copypaste.rb \
+            https://raw.githubusercontent.com/qxlsz/copypaste.fyi/main/Formula/copypaste.rb
+          test -s Formula/copypaste.rb
+          grep -q 'class Copypaste' Formula/copypaste.rb
+      - name: Commit if the pointer changed
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Formula/copypaste.rb
+          if git diff --cached --quiet; then
+            echo "already matches copypaste.fyi main"
+            exit 0
+          fi
+          git commit -m "sync Formula from qxlsz/copypaste.fyi main"
+          git push

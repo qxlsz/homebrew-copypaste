@@ -14,7 +14,11 @@ class Copypaste < Formula
   def caveats
     <<~EOS
       Public site:  copypaste send --host https://www.copypaste.fyi "notes"
-      Local server: brew services start copypaste
+      Local server: copypaste serve
+                    brew services start copypaste
+
+      Closed instance: set COPYPASTE_REQUIRE_WRITE_AUTH=true and
+      COPYPASTE_AUTH_TOKEN in the environment. Tokens never go on argv.
     EOS
   end
 

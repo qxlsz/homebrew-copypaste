@@ -12,6 +12,7 @@ brew reinstall --fetch-HEAD qxlsz/copypaste/copypaste   # pick up latest main
 ```
 
 Local audit (no Homebrew required). CI also runs Homebrew's `brew test-bot`.
+The six-hour sync still copies `Formula/copypaste.rb` from upstream as-is.
 
 ```bash
 ./scripts/audit.sh

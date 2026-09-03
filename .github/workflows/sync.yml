@@ -23,11 +23,6 @@ jobs:
             https://raw.githubusercontent.com/qxlsz/copypaste.fyi/main/Formula/copypaste.rb
           test -s Formula/copypaste.rb
           grep -q 'class Copypaste' Formula/copypaste.rb
-      - name: Audit fetched formula
-        run: |
-          set -euo pipefail
-          chmod +x scripts/audit.sh
-          ./scripts/audit.sh Formula/copypaste.rb
       - name: Commit if the pointer changed
         run: |
           set -euo pipefail

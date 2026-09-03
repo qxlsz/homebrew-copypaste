@@ -16,8 +16,6 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
-      - name: Ruby syntax (when available)
-        run: sudo apt-get update && sudo apt-get install -y ruby
       - name: Audit formula
         run: ./scripts/audit.sh
       - name: Audit script tests

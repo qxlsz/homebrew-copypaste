@@ -1,0 +1,22 @@
+# Fast gate that does not need a Homebrew container.
+# Same bash tests as qxlsz/copypaste.fyi scripts/__tests__.
+name: Formula audit
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Audit formula
+        run: ./scripts/audit.sh
+      - name: Audit script tests
+        run: ./scripts/__tests__/audit.test.sh

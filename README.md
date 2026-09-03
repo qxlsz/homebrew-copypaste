@@ -10,3 +10,10 @@ A workflow copies `Formula/copypaste.rb` from upstream every six hours so this t
 brew install qxlsz/copypaste/copypaste
 brew reinstall --fetch-HEAD qxlsz/copypaste/copypaste   # pick up latest main
 ```
+
+Local audit (no Homebrew required). CI also runs Homebrew's `brew test-bot`.
+
+```bash
+./scripts/audit.sh
+./scripts/__tests__/audit.test.sh
+```

@@ -1,0 +1,11 @@
+# brew tap-new includes this so GitHub Actions pins stay current.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+    groups:
+      github-actions:
+        patterns:
+          - "*"

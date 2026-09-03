@@ -69,7 +69,11 @@ expect_fail "missing rust dep" "${TMP}/no_rust.rb" "rust"
 
 # CI wiring: official Homebrew test-bot. Sync stays a pointer (no audit gate).
 grep -q 'brew test-bot --only-tap-syntax' "${ROOT}/.github/workflows/tests.yml"
-grep -q 'brew test-bot --only-formulae' "${ROOT}/.github/workflows/tests.yml"
+if grep -qE '^[[:space:]]+- run: brew test-bot --only-formulae' "${ROOT}/.github/workflows/tests.yml"
+then
+  echo "HEAD-only tap cannot run the tap-new formulae/bottle job" >&2
+  exit 1
+fi
 if grep -q './scripts/audit.sh Formula/copypaste.rb' "${ROOT}/.github/workflows/sync.yml"
 then
   echo "sync.yml must not fail the pointer copy on local audit" >&2
